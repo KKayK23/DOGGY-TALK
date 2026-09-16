@@ -1,0 +1,31 @@
+/* Figma-aligned application screens */
+:root {
+  --ink: #171713;
+  --muted: #77756d;
+  --paper: #fffdf7;
+  --canvas: #eceae4;
+  --line: #24231f;
+  --yellow: #ffeca7;
+  --yellow-note: #fff0a8;
+  --red: #d95b53;
+  --green: #607c67;
+  --shadow: 0 18px 55px rgba(24, 23, 19, 0.13);
+  --device-width: 393px;
+  --device-height: 852px;
+  --note-tilt: -2.4deg;
+  --history-card-height: 96px;
+  --history-card-photo-height: 126px;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--canvas);
+  background-image: none;
+  font-family: "Special Elite", "Chiron GoRound TC", sans-serif;
+}
+
+html { overscroll-behavior: none; }
+
+/* 開啟收藏夾時鎖定整頁捲動：頁首頁尾與 iPhone 狀態列、home indicator 固定不動 */
+body.scroll-locked { overflow: hidden; }
+

@@ -1,0 +1,18 @@
+{
+  "name": "doggy-talk",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "DOGGY TALK 小狗語言翻譯器 — 純前端趣味網頁",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lucide": "^0.468.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.7"
+  }
+}

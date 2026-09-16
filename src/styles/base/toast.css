@@ -1,0 +1,35 @@
+.toast {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  display: flex;
+  width: min(calc(100% - 32px), 361px);
+  min-height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px 10px 16px;
+  color: #fff;
+  background: var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transform: translate(-50%, calc(100% + 84px));
+  transition: transform 220ms ease;
+}
+
+.toast.visible { transform: translate(-50%, 0); }
+.toast button { min-height: 34px; padding: 0 11px; color: var(--yellow); background: transparent; font-weight: 800; }
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--yellow);
+  transform-origin: left;
+}
+
+.toast.visible .toast-progress.countdown { animation: countdown 3s linear forwards; }
+

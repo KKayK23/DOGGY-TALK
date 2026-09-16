@@ -1,0 +1,33 @@
+.app-shell {
+  width: min(100%, var(--device-width));
+  min-height: 100dvh;
+  padding: max(18px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.topbar { min-height: 44px; margin: 0; }
+.brand { display: none; }
+
+.topbar-actions {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  color: var(--ink);
+  background: transparent;
+  border: 1.4px solid transparent;
+  border-radius: 50%;
+}
+
+.icon-button:hover,
+.icon-button:focus-visible { border-color: var(--ink); }
+
+.count-badge { top: -2px; right: -6px; background: var(--red); border-color: var(--paper); }
+.intro { display: none; }
+

@@ -1,0 +1,84 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  background: rgba(24, 27, 23, 0.46);
+  backdrop-filter: blur(3px);
+}
+
+.overlay.visible { display: block; animation: fade 180ms ease both; }
+
+.sheet {
+  position: absolute;
+  inset: auto 0 0;
+  max-height: 88dvh;
+  padding: 14px 18px max(24px, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  background: var(--canvas);
+  border-radius: 14px 14px 0 0;
+  animation: sheet-in 230ms ease both;
+}
+
+.sheet-handle {
+  width: 42px;
+  height: 4px;
+  margin: 0 auto 17px;
+  background: #b9bbb4;
+  border-radius: 2px;
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.sheet-header h2 { margin: 0; font-family: "Special Elite", "Chiron GoRound TC", sans-serif; font-size: 19px; }
+.sheet-header p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+
+.photo-frame {
+  display: none;
+  position: relative;
+  width: 100%;
+  height: 240px;
+  margin-bottom: 13px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: #eeede7;
+  touch-action: none;
+  cursor: grab;
+}
+
+.photo-frame.visible { display: block; }
+.photo-frame.dragging { cursor: grabbing; }
+
+.photo-preview {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.photo-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.photo-actions .primary-button { grid-column: 1 / -1; }
+
+.history-overlay .sheet { height: 92dvh; }
+
+.history-list { display: grid; gap: 12px; padding-bottom: 191px; }
+
+.history-empty {
+  display: grid;
+  min-height: 280px;
+  place-items: center;
+  color: var(--muted);
+  text-align: center;
+}
+
+.history-empty svg { margin-bottom: 12px; }
+

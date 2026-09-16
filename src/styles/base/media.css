@@ -1,0 +1,18 @@
+@media (min-width: 760px) {
+  body { display: grid; min-height: 100dvh; place-items: center; padding: 28px 0; }
+  .iphone-frame { position: relative; width: var(--device-width); overflow: hidden; }
+  .ios-system-ui { position: absolute; inset: 0; z-index: 60; display: block; pointer-events: none; }
+  .toast { position: absolute; bottom: 62px; }
+  .app-shell { width: var(--device-width); min-height: var(--device-height); padding-top: 59px; padding-bottom: 34px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .sheet { left: 50%; width: var(--device-width); transform: translateX(-50%); border-radius: 14px 14px 0 0; }
+  @keyframes sheet-in { from { transform: translate(-50%, 100%); } to { transform: translate(-50%, 0); } }
+}
+
+@media (max-width: 360px) {
+  .app-shell { padding-inline: 12px; }
+  .intro { grid-template-columns: 78px 1fr; gap: 10px; }
+  .dog-photo { width: 78px; }
+  .stage { padding-inline: 11px; }
+  .history-slide { gap: 9px; }
+}
+

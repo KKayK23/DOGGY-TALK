@@ -1,0 +1,65 @@
+.overlay { background: rgba(23, 23, 19, 0.25); backdrop-filter: blur(2px); }
+
+.sheet {
+  min-height: 55dvh;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-bottom: 0;
+  border-radius: 18px 18px 0 0;
+}
+
+.history-overlay { background: var(--paper); }
+
+.history-overlay .sheet {
+  top: 0;
+  height: 100dvh;
+  max-height: none;
+  padding-top: max(18px, env(safe-area-inset-top));
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.history-overlay .sheet-handle { display: none; }
+.sheet-header { margin-bottom: 30px; }
+.sheet-header h2 { font-size: 21px; }
+.sheet-header p { color: var(--ink); font-size: 10px; }
+
+.sheet.camera-active .photo-frame,
+.sheet.camera-active .photo-actions { display: none; }
+
+.camera-view { display: none; }
+.camera-view.visible { display: block; }
+
+.camera-stream {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #171713;
+  border: 1.5px solid var(--ink);
+  object-fit: cover;
+}
+
+.camera-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+.camera-spacer { width: 40px; height: 40px; }
+
+.shutter-button {
+  width: 56px;
+  height: 56px;
+  background: var(--yellow);
+  border: 1.6px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 2px 3px 0 rgba(23, 23, 19, 0.14);
+}
+
+.shutter-button:active { transform: scale(0.94); }
+

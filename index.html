@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f3eb">
+  <title>DOGGY TALK｜小狗語言翻譯器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <div class="iphone-frame">
+    <div class="ios-system-ui" aria-hidden="true">
+      <div class="ios-status-bar">
+        <span class="ios-time">9:41</span>
+        <div class="ios-status-icons">
+          <svg class="ios-signal" viewBox="0 0 18 12" width="18" height="12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+          <svg class="ios-wifi" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19.2h.01"/><path d="M2.6 9.3a15 15 0 0 1 18.8 0"/><path d="M5.5 12.9a10 10 0 0 1 13 0"/><path d="M8.8 16.2a5 5 0 0 1 6.4 0"/></svg>
+          <div class="ios-battery"><div class="ios-battery-body"><div class="ios-battery-fill"></div></div><div class="ios-battery-cap"></div></div>
+        </div>
+      </div>
+      <div class="ios-dynamic-island"></div>
+      <div class="ios-home-indicator"></div>
+    </div>
+
+    <section class="welcome-screen" id="welcomeScreen" aria-labelledby="welcomeTitle">
+    <img class="welcome-art" src="/src/assets/welcome-wallpaper.png" alt="不同姿態的小狗水彩插畫">
+    <div class="welcome-decor" aria-hidden="true"></div>
+    <div class="welcome-copy">
+      <h1 id="welcomeTitle">Doggy Talk</h1>
+      <p>聽聽毛孩子今天想說什麼</p>
+      <button class="start-button" id="startButton" type="button">Let's start</button>
+    </div>
+  </section>
+
+  <main class="app-shell hidden" id="appScreen">
+    <header class="topbar">
+      <div class="brand" aria-label="DOGGY TALK">
+        <div class="brand-mark"><i data-lucide="bone" aria-hidden="true"></i></div>
+        <div>
+          <p class="brand-name">DOGGY TALK</p>
+          <div class="brand-sub">小狗語言翻譯器</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-button" id="homeButton" type="button" aria-label="回到歡迎頁" title="首頁"><i data-lucide="house" size="18" aria-hidden="true"></i></button>
+        <button class="icon-button" id="historyButton" type="button" aria-label="開啟收藏夾" title="收藏夾">
+          <i data-lucide="folder" size="18" aria-hidden="true"></i>
+          <span class="count-badge" id="historyCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <div class="eyebrow"><i data-lucide="sparkles" size="15" aria-hidden="true"></i> 今天牠想說什麼？</div>
+        <h1>聽聽毛孩子的悄悄話</h1>
+      </div>
+      <img class="dog-photo" src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=240&q=82" alt="一隻開心的黃金獵犬">
+    </section>
+
+    <section class="stage" aria-live="polite">
+      <div class="status-row">
+        <div class="status" id="status"><span class="status-dot"></span><span id="statusText">準備好了</span></div>
+        <span class="timer" id="timer">00:00 / 00:15</span>
+      </div>
+
+      <div class="recorder-panel" id="recorderPanel">
+        <div class="waveform" id="waveform" aria-hidden="true"></div>
+        <button class="record-button" id="recordButton" type="button" aria-label="開始錄音">
+          <img class="record-dog" id="recordDog" src="/src/assets/doggy-ready.png" alt="小狗準備按下錄音鍵">
+        </button>
+        <div class="record-label" id="recordLabel">
+          press to record
+          <span class="record-hint">最短 1 秒，最長 15 秒</span>
+        </div>
+      </div>
+
+      <div class="generating-panel" id="generatingPanel">
+        <div>
+          <p class="generating-loading">Loading...</p>
+          <img class="generating-dog" src="/src/assets/doggy-sleep.png" alt="打瞌睡等翻譯的小狗">
+          <h2 class="generating-title" id="generatingTitle">正在翻譯汪語</h2>
+          <p class="generating-copy">請稍等一下</p>
+        </div>
+      </div>
+
+      <div class="result-panel" id="resultPanel">
+        <h2 class="result-heading">Doggy say:</h2>
+        <div class="swipe-shell" id="swipeShell">
+          <div class="swipe-action save" id="saveAction"><i data-lucide="bookmark" aria-hidden="true"></i><span>save</span></div>
+          <div class="swipe-action delete" id="deleteAction"><i data-lucide="x" aria-hidden="true"></i><span>cancel</span></div>
+          <article class="note" id="note" tabindex="0" aria-label="翻譯便簽，可左滑刪除或右滑儲存">
+            <div class="note-topline">
+              <span class="category" id="noteCategory">撒嬌</span>
+              <span class="note-time" id="noteTime">剛剛</span>
+            </div>
+            <p class="note-text" id="noteText"></p>
+            <div class="note-footer">
+              <button class="note-wave" id="noteWaveButton" type="button" aria-label="播放錄音" title="播放剛剛的錄音"><svg viewBox="0 0 15 14" width="20" height="20" fill="currentColor" aria-hidden="true"><rect class="wave-bar" x="0.5" y="5" width="2.4" height="4" rx="1.2"/><rect class="wave-bar" x="4.3" y="2.5" width="2.4" height="9" rx="1.2"/><rect class="wave-bar" x="8.1" y="1" width="2.4" height="12" rx="1.2"/><rect class="wave-bar" x="11.9" y="3.5" width="2.4" height="7" rx="1.2"/></svg><span id="noteDuration">3.2 秒</span></button>
+              <span># DOGGY TALK</span>
+            </div>
+          </article>
+        </div>
+        <p class="swipe-hint" aria-label="左滑 cancel，右滑 save">
+          <i data-lucide="arrow-left" aria-hidden="true"></i><span>左滑 cancel</span>
+          <span class="swipe-hint-dot">・</span>
+          <span>右滑 save</span><i data-lucide="arrow-right" aria-hidden="true"></i>
+        </p>
+        <div class="result-actions" aria-label="翻譯結果操作">
+          <button class="result-action" id="resultRetryButton" type="button"><svg class="paw-icon" viewBox="0 0 26 22" width="28" height="24" fill="currentColor" aria-hidden="true"><ellipse cx="4.1" cy="8.8" rx="3" ry="3.8" transform="rotate(-18 4.1 8.8)"/><ellipse cx="9.7" cy="5.2" rx="3.1" ry="4" transform="rotate(-6 9.7 5.2)"/><ellipse cx="16.3" cy="5.2" rx="3.1" ry="4" transform="rotate(6 16.3 5.2)"/><ellipse cx="21.9" cy="8.8" rx="3" ry="3.8" transform="rotate(18 21.9 8.8)"/><path d="M13 10.4c4.8 0 8.6 3 8.6 6.6 0 3-2.5 4.8-4.9 4.8-1.4 0-2.4-.7-3.7-.7s-2.3.7-3.7.7c-2.4 0-4.9-1.8-4.9-4.8 0-3.6 3.8-6.6 8.6-6.6z"/></svg><span>again</span></button>
+        </div>
+      </div>
+
+      <div class="saved-panel" id="savedPanel">
+        <div>
+          <div class="saved-icon"><i data-lucide="check" size="34" stroke-width="3" aria-hidden="true"></i></div>
+          <h2>Memo saved</h2>
+          <p>已經放進收藏夾了</p>
+          <button class="primary-button" id="againButton" type="button">record again</button>
+        </div>
+      </div>
+
+      <div class="fail-panel" id="failPanel">
+        <div>
+          <p class="fail-text">信号被隔壁猫截胡了，再试一次</p>
+          <img class="fail-dog" src="/src/assets/doggy-no.png" alt="翻譯失敗的小狗">
+          <button class="result-action fail-again" id="failRetryButton" type="button"><svg class="paw-icon" viewBox="0 0 26 22" width="28" height="24" fill="currentColor" aria-hidden="true"><ellipse cx="4.1" cy="8.8" rx="3" ry="3.8" transform="rotate(-18 4.1 8.8)"/><ellipse cx="9.7" cy="5.2" rx="3.1" ry="4" transform="rotate(-6 9.7 5.2)"/><ellipse cx="16.3" cy="5.2" rx="3.1" ry="4" transform="rotate(6 16.3 5.2)"/><ellipse cx="21.9" cy="8.8" rx="3" ry="3.8" transform="rotate(18 21.9 8.8)"/><path d="M13 10.4c4.8 0 8.6 3 8.6 6.6 0 3-2.5 4.8-4.9 4.8-1.4 0-2.4-.7-3.7-.7s-2.3.7-3.7.7c-2.4 0-4.9-1.8-4.9-4.8 0-3.6 3.8-6.6 8.6-6.6z"/></svg><span>again</span></button>
+        </div>
+      </div>
+    </section>
+
+    <div class="privacy-note" id="privacyNote"><span>錄音只在你儲存後留在這台裝置，不會上傳或用於聲音分析。</span></div>
+  </main>
+
+  <div class="toast" id="toast" role="status">
+    <span id="toastText">已刪除便簽</span>
+    <button id="toastAction" type="button">復原</button>
+    <span class="toast-progress" id="toastProgress"></span>
+  </div>
+  </div>
+
+  <div class="overlay" id="photoOverlay" role="dialog" aria-modal="true" aria-labelledby="photoTitle">
+    <section class="sheet" id="photoSheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div><h2 id="photoTitle">Add a photo</h2><p>加上今天的照片，替這張便簽留下紀念</p></div>
+        <button class="icon-button" id="cancelPhotoButton" type="button" aria-label="返回便簽"><i data-lucide="x" aria-hidden="true"></i></button>
+      </div>
+      <div class="photo-frame" id="photoFrame">
+        <img class="photo-preview" id="photoPreview" alt="待儲存的照片預覽" draggable="false">
+      </div>
+      <div class="photo-actions">
+        <input class="sr-only" id="photoInput" type="file" accept="image/*">
+        <input class="sr-only" id="cameraInput" type="file" accept="image/*" capture="environment">
+        <button class="secondary-button" id="cameraButton" type="button"><i data-lucide="camera" size="17" aria-hidden="true"></i>拍照</button>
+        <button class="secondary-button" id="choosePhotoButton" type="button"><i data-lucide="image" size="17" aria-hidden="true"></i>照片</button>
+        <button class="primary-button" id="confirmSaveButton" type="button">save memo</button>
+      </div>
+      <div class="camera-view" id="cameraView">
+        <video class="camera-stream" id="cameraStream" autoplay playsinline muted></video>
+        <div class="camera-controls">
+          <button class="icon-button" id="closeCameraButton" type="button" aria-label="關閉相機"><i data-lucide="x" aria-hidden="true"></i></button>
+          <button class="shutter-button" id="shutterButton" type="button" aria-label="按下快門"></button>
+          <span class="camera-spacer" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="overlay history-overlay" id="historyOverlay" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+    <section class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div><h2 id="historyTitle">收藏夾</h2><p>Doggy memos</p></div>
+        <button class="icon-button" id="closeHistoryButton" type="button" aria-label="關閉歷史記錄"><i data-lucide="x" aria-hidden="true"></i></button>
+      </div>
+      <div class="history-tools">
+        <div class="layout-switch" role="group" aria-label="便簽排版">
+          <button class="layout-button" id="layoutOneButton" type="button" aria-pressed="true" aria-label="單欄直排" title="單欄直排"><i data-lucide="layout-list" aria-hidden="true"></i></button>
+          <button class="layout-button" id="layoutTwoButton" type="button" aria-pressed="false" aria-label="雙欄並排" title="雙欄並排"><i data-lucide="layout-grid" aria-hidden="true"></i></button>
+        </div>
+        <button class="text-button" id="clearHistoryButton" type="button">清除全部</button>
+      </div>
+      <div class="history-list" id="historyList"></div>
+      <div class="photo-reveal" id="photoReveal" role="dialog" aria-modal="true" aria-label="收藏的照片">
+        <div class="polaroid"><img id="photoRevealImage" alt="這則記錄的小狗照片"></div>
+      </div>
+      <div class="history-dog-clip"><img class="history-dog" src="/src/assets/doggy-file.png" alt="整理收藏便簽的小狗"></div>
+    </section>
+  </div>
+</body>
+</html>
