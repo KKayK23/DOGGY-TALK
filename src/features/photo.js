@@ -185,6 +185,7 @@ export async function finalizeSave() {
     text: record.text,
     duration: record.duration,
     createdAt: record.createdAt,
+    savedAt: Date.now(),
     hasAudio: record.hasAudio,
     hasPhoto: record.hasPhoto,
   });

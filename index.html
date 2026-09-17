@@ -80,9 +80,9 @@
 
       <div class="generating-panel" id="generatingPanel">
         <div>
-          <p class="generating-loading">Loading...</p>
+          <p class="generating-loading" aria-label="Loading..."><span style="--i:0">L</span><span style="--i:1">o</span><span style="--i:2">a</span><span style="--i:3">d</span><span style="--i:4">i</span><span style="--i:5">n</span><span style="--i:6">g</span><span style="--i:7">...</span></p>
+          <h2 class="generating-title" id="generatingTitle" aria-label="正在翻譯汪語"><span style="--i:0">正</span><span style="--i:1">在</span><span style="--i:2">翻</span><span style="--i:3">譯</span><span style="--i:4">汪</span><span style="--i:5">語</span></h2>
           <img class="generating-dog" src="/src/assets/doggy-sleep.png" alt="打瞌睡等翻譯的小狗">
-          <h2 class="generating-title" id="generatingTitle">正在翻譯汪語</h2>
           <p class="generating-copy">請稍等一下</p>
         </div>
       </div>
@@ -185,6 +185,8 @@
         <button class="text-button" id="clearHistoryButton" type="button">清除全部</button>
       </div>
       <div class="history-list" id="historyList"></div>
+      <!-- 收藏夾卡片補上傳照片用的隱藏檔案選擇器 -->
+      <input class="sr-only" id="historyPhotoInput" type="file" accept="image/*">
       <div class="photo-reveal" id="photoReveal" role="dialog" aria-modal="true" aria-label="收藏的照片">
         <div class="polaroid"><img id="photoRevealImage" alt="這則記錄的小狗照片"></div>
       </div>

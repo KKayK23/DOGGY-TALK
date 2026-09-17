@@ -21,7 +21,9 @@
 
 .status-dot { display: none; }
 
-.status.ready { visibility: hidden; }
+/* ready 與 generating 都隱藏狀態膠囊：loading 頁自身已有「正在翻譯汪語」，避免重複 */
+.status.ready,
+.status.generating { visibility: hidden; }
 
 .timer {
   position: absolute;

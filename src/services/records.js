@@ -6,6 +6,9 @@ import { elements } from "../elements.js";
  */
 const STORAGE_KEY = "doggy-talk-records-v1";
 
+/* 上次打開收藏夾的時間戳；在此之後儲存的紀錄算「未讀」。 */
+const READ_KEY = "doggy-talk-history-read-at";
+
 export function getRecords() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
   catch { return []; }
@@ -17,9 +20,16 @@ export function setRecords(records) {
   updateHistoryCount();
 }
 
-/** 更新收藏夾按鈕上的數字徽章。 */
+/** 使用者看過收藏夾了：把目前時間記為已讀基準，徽章歸零。 */
+export function markHistoryRead() {
+  localStorage.setItem(READ_KEY, String(Date.now()));
+  updateHistoryCount();
+}
+
+/** 更新收藏夾按鈕上的徽章：顯示未讀（看過收藏夾後新存入）的錄音數。 */
 export function updateHistoryCount() {
-  const count = getRecords().length;
+  const lastReadAt = Number(localStorage.getItem(READ_KEY) || 0);
+  const count = getRecords().filter((record) => (record.savedAt ?? record.createdAt) > lastReadAt).length;
   elements.historyCount.textContent = String(count);
   elements.historyCount.classList.toggle("visible", count > 0);
 }

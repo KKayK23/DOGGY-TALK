@@ -28,8 +28,6 @@ export function generateResult(audioBlob, duration) {
   state.appState = "generating";
   setStatus("generating", "正在翻譯汪語");
   showView("generating");
-  const loadingLines = ["正在翻譯汪語", "整理今天的悄悄話", "快要聽懂了"];
-  elements.generatingTitle.textContent = loadingLines[Math.floor(Math.random() * loadingLines.length)];
   window.setTimeout(() => {
     if (Math.random() < 0.18) {
       state.appState = "idle";

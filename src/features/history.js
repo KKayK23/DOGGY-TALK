@@ -1,7 +1,7 @@
 import { state } from "../state.js";
 import { elements, refreshIcons } from "../elements.js";
-import { getRecords, setRecords } from "../services/records.js";
-import { deleteMedia, getMedia } from "../services/db.js";
+import { getRecords, setRecords, markHistoryRead } from "../services/records.js";
+import { deleteMedia, getMedia, storeMedia } from "../services/db.js";
 import { stopActiveAudio, playRecordAudio } from "../services/audio.js";
 import { showToast } from "./toast.js";
 import { escapeHtml, formatDate, formatDuration } from "../utils/format.js";
@@ -72,7 +72,8 @@ export async function renderHistory() {
           </div>
         </div>
         ${record.hasPhoto ? `
-        <button class="photo-thumb" type="button" aria-haspopup="true" aria-label="展開照片"><span class="thumb-empty"></span></button>` : ""}
+        <button class="photo-thumb" type="button" aria-haspopup="true" aria-label="展開照片"><span class="thumb-empty"></span></button>` : `
+        <button class="photo-thumb add-photo" type="button" aria-label="幫這則記錄加上照片" title="加照片"><i data-lucide="image-plus" aria-hidden="true"></i></button>`}
       </div>
     </article>`).join("");
   refreshIcons();
@@ -235,6 +236,7 @@ export async function clearHistory() {
 
 export async function openHistory() {
   window.scrollTo(0, 0);
+  markHistoryRead();
   document.body.classList.add("scroll-locked");
   elements.historyOverlay.classList.add("visible");
   await renderHistory();
@@ -263,6 +265,77 @@ export async function handleHistoryClick(event) {
   // 卡片滑開（刪除層露出）時，點擊內文只負責收回卡片
   if (card.classList.contains("swiped")) { closeSwipedCard(card); return; }
   if (button?.classList.contains("like")) { toggleRecordLike(record, button); return; }
+  if (button?.classList.contains("add-photo")) { openHistoryPhotoPicker(record.id); return; }
   if (button?.classList.contains("photo-thumb")) { await toggleCardPhoto(card); return; }
   if (record.hasPhoto) await toggleCardPhoto(card);
+}
+
+/* ── 補上傳照片：沒有照片的卡片可從收藏夾直接選圖加入 ── */
+
+let pendingUploadId = null;
+
+function openHistoryPhotoPicker(recordId) {
+  closeAllSwipedCards();
+  pendingUploadId = recordId;
+  elements.historyPhotoInput.value = "";
+  elements.historyPhotoInput.click();
+}
+
+/** 把圖片等比縮到最長邊 1600px 並壓成 JPEG（與儲存流程的照片規格一致）。 */
+async function compressImage(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const image = await new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error("image decode failed"));
+      img.src = url;
+    });
+    const scale = Math.min(1, 1600 / Math.max(image.naturalWidth, image.naturalHeight));
+    // 已經是小張 JPEG 就直接用原檔，避免多一次轉檔失真
+    if (scale >= 1 && file.type === "image/jpeg") return file;
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+    canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+    canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.92));
+    return blob || file;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+/** 收藏夾上傳 input 的 change 入口：驗證、壓縮、存進 IndexedDB 後重繪卡片。 */
+export async function handleHistoryPhotoUpload(file) {
+  const recordId = pendingUploadId;
+  pendingUploadId = null;
+  if (!recordId || !file) return;
+  if (!file.type.startsWith("image/")) {
+    showToast("請選擇一張圖片", null, 2200);
+    return;
+  }
+  if (file.size > 8 * 1024 * 1024) {
+    showToast("照片請小於 8 MB", null, 2400);
+    return;
+  }
+  const records = getRecords();
+  const record = records.find((item) => item.id === recordId);
+  if (!record) return;
+  let photoBlob = file;
+  try {
+    photoBlob = await compressImage(file);
+  } catch {
+    photoBlob = file; // 解碼失敗（如 HEIC）就保留原檔，交給支援的環境顯示
+  }
+  try {
+    await storeMedia(`${recordId}:photo`, photoBlob);
+  } catch {
+    showToast("照片儲存失敗，請再試一次", null, 2800);
+    return;
+  }
+  record.hasPhoto = true;
+  setRecords(records);
+  closePhotoReveal();
+  await renderHistory();
+  showToast("照片已加入這則記錄", null, 2000);
 }

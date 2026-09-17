@@ -109,6 +109,17 @@
 .photo-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; background: #eeede7; }
 .photo-thumb .thumb-empty { display: block; width: 100%; height: 100%; background: #eeede7; }
 
+/* 沒有照片的卡片：虛線拍立得當上傳入口（純圖示），點了開檔案選擇器補照片 */
+.photo-thumb.add-photo {
+  display: grid;
+  place-items: center;
+  padding: 3px;
+  background: rgba(255, 253, 247, 0.75);
+  border-style: dashed;
+}
+.photo-thumb.add-photo svg { width: 20px; height: 20px; }
+.photo-thumb.add-photo:active { transform: rotate(2.5deg) scale(0.96); }
+
 /* 拍立得大圖：點縮圖後以置中浮層顯示在收藏夾畫面中央，點背景或照片關閉 */
 .photo-reveal {
   position: fixed;

@@ -35,6 +35,7 @@ import {
   closePhotoReveal,
   endCardDrag,
   handleHistoryClick,
+  handleHistoryPhotoUpload,
   initCardLayout,
   moveCardDrag,
   openHistory,
@@ -126,6 +127,7 @@ elements.historyList.addEventListener("pointermove", moveCardDrag);
 elements.historyList.addEventListener("pointerup", endCardDrag);
 elements.historyList.addEventListener("pointercancel", endCardDrag);
 elements.historyList.addEventListener("click", handleHistoryClick);
+elements.historyPhotoInput.addEventListener("change", () => handleHistoryPhotoUpload(elements.historyPhotoInput.files[0]));
 // 點浮層背景或拍立得照片關閉大圖
 elements.photoReveal.addEventListener("click", closePhotoReveal);
 elements.clearHistoryButton.addEventListener("click", clearHistory);

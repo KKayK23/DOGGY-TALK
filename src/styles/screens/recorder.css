@@ -43,21 +43,32 @@
 
 .generating-panel.visible { display: grid; place-items: center; padding-bottom: 54px; }
 
-/* Loading 頁英文標示：與小狗同一組 breathe 浮動，看起來一起呼吸 */
+/* Loading 頁兩行文字：逐字橫向波浪跳動（--i 控制每字延遲，波由左向右傳遞） */
 .generating-loading {
-  margin: 0 0 10px;
+  margin: 0 0 4px;
   color: var(--ink);
   font-family: "Special Elite", "Chiron GoRound TC", serif;
   font-size: 15px;
   text-align: center;
-  animation: breathe 1.6s ease-in-out infinite alternate;
+}
+
+.generating-loading span,
+.generating-title span {
+  display: inline-block;
+  animation: wave-jump 1.1s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 90ms);
+}
+
+@keyframes wave-jump {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-7px); }
 }
 
 .generating-dog {
   display: block;
   width: min(68vw, 250px);
   height: 275px;
-  margin: 0 auto 5px;
+  margin: 10px auto 5px;
   object-fit: contain;
   animation: breathe 1.6s ease-in-out infinite alternate;
 }
@@ -65,7 +76,7 @@
 .thinking-mark { display: none; }
 
 .generating-title {
-  margin: 0 0 5px;
+  margin: 0;
   font-family: "Special Elite", "Chiron GoRound TC", serif;
   font-size: 15px;
   font-weight: 400;

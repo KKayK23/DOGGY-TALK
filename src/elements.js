@@ -9,6 +9,7 @@ import {
   Heart,
   House,
   Image,
+  ImagePlus,
   LayoutGrid,
   LayoutList,
   NotebookTabs,
@@ -35,7 +36,7 @@ export const elements = Object.fromEntries(
     "historyCount", "photoOverlay", "photoSheet", "photoInput", "cameraInput", "photoFrame", "photoPreview",
     "choosePhotoButton", "cameraButton", "cameraView", "cameraStream", "shutterButton", "closeCameraButton",
     "confirmSaveButton", "cancelPhotoButton", "historyOverlay", "closeHistoryButton", "historyList",
-    "photoReveal", "photoRevealImage",
+    "photoReveal", "photoRevealImage", "historyPhotoInput",
     "layoutOneButton", "layoutTwoButton",
     "clearHistoryButton", "toast", "toastText", "toastAction", "toastProgress",
   ].map((id) => [id, document.getElementById(id)])
@@ -44,7 +45,7 @@ export const elements = Object.fromEntries(
 /* 專案實際用到的 lucide 圖示；新增圖示時在這裡補 import。 */
 const icons = {
   ArrowLeft, ArrowRight, Bone, Bookmark, Camera, Check, Folder, Heart,
-  House, Image, LayoutGrid, LayoutList, NotebookTabs, Pause, Play, Sparkles, Trash2, X,
+  House, Image, ImagePlus, LayoutGrid, LayoutList, NotebookTabs, Pause, Play, Sparkles, Trash2, X,
 };
 
 /** 重新掃描 data-lucide 並渲染圖示（動態插入 HTML 後要呼叫）。 */
